@@ -25,7 +25,6 @@ spec:
         app: web
         tier: frontend
         project: expense
-    spec:
       containers:
       - name: frontend
         image: ashwani525/frontend:v1
@@ -33,10 +32,9 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: frontend-service
+  name: backend-service
   namespace: expense
 spec:
-  type: LoadBalancer
   selector:
     app: web
     tier: frontend
