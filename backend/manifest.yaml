@@ -1,0 +1,58 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend
+  namespace: expense
+data:
+  DB: Host
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment-set
+  namespace: expense
+  labels: # these labels are replicaset labels
+    app: api
+    tier: backend
+    project: expense
+spec:
+  # modify replicas according to your case
+  replicas: 2
+  selector:
+    matchLabels:
+    # these are used to select the pod to create replicas
+      app: api
+      tier: backend
+      project: expense
+    # this is pod defination
+  template:
+    metadata:
+      namespace: expense
+    # these labels belong to pod
+      labels:
+        app: api
+        tier: backend
+        project: expense
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:stable-perl
+        envFrom:
+          configMapRef:
+           - name: backend
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service
+  namespace: expense
+spec:
+  selector:
+    app: api
+    tier: backend
+    project: expense
+  ports:
+  - name: nginx-svc-port
+    protocol: TCP
+    port: 8080
+    targetPort: 8080
