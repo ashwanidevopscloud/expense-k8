@@ -39,7 +39,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: nginx:stable-perl
+          image: hemanthkumar75/backend:v1
           envFrom:
             - configMapRef:
                 name: backend
