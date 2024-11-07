@@ -1,7 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-d
+  namespace: expense
+  labels: # these labels are replicaset labels
+    project: expense
+    module: frontend
+    tier: web
+spec:
+  # modify replicas according to your case
+  replicas: 2
+  selector:
+    matchLabels:
+    # these are used to select the pod to create replicas
+      tier: web
+      project: expense
+      module: frontend
+    # this is pod defination
+  template:
+    metadata:
+      namespace: expense
+    # these labels belong to pod
+      labels:
+        tier: web
+        project: expense
+        module: frontend
+    spec:
+      containers:
+        - name: backend
+          image: nginx:stable-perl
+---
 apiVersion: v1
 kind: Service
 metadata:
-  name: backend-service
+  name: frontend-service
   namespace: expense
 spec:
   selector:
