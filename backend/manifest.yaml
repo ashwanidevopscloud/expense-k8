@@ -35,8 +35,8 @@ spec:
         project: expense
     spec:
       containers:
-      - name: nginx
-        image: nginx:stable-perl
+      - name: backend
+        image: ashwani525/backend
         envFrom:
           - configMapRef:
               name: backend

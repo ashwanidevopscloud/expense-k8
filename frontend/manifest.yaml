@@ -26,17 +26,17 @@ spec:
         tier: frontend
         project: expense
     spec:
-      type: LoadBalancer
       containers:
-      - name: nginx
-        image: nginx:stable-perl
-      
+      - name: frontend
+        image: ashwani525/frontend:v1
+---
 apiVersion: v1
 kind: Service
 metadata:
   name: frontend-service
   namespace: expense
 spec:
+  type: LoadBalancer
   selector:
     app: web
     tier: frontend

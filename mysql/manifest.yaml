@@ -27,8 +27,8 @@ spec:
         project: expense
     spec:
       containers:
-      - name: nginx
-        image: nginx:stable-perl
+      - name: mysql
+        image: ashwani525/mysql
 ---
 apiVersion: v1
 kind: Service
