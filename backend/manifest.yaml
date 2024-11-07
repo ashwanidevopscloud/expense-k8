@@ -9,7 +9,7 @@ data:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend-deployment-set
+  name: backend-d
   namespace: expense
   labels: # these labels are replicaset labels
     app: api

@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend-deployment-set
+  name: frontend-d
   namespace: expense
   labels: # these labels are replicaset labels
     app: web
