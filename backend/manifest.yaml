@@ -38,8 +38,8 @@ spec:
       - name: nginx
         image: nginx:stable-perl
         envFrom:
-          configMapRef:
-           - name: backend
+          - configMapRef:
+              name: backend
 ---
 apiVersion: v1
 kind: Service
