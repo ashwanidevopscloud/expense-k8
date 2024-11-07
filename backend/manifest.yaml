@@ -9,53 +9,47 @@ data:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend
+  name: backend-d
   namespace: expense
-  labels:
-    app: backend
-    tier: api
+  labels: # these labels are replicaset labels
+    app: api
+    tier: backend
     project: expense
 spec:
-  replicas: 2
+  # modify replicas according to your case
+  replicas: 3
   selector:
     matchLabels:
-      app: backend
-      tier: api
+    # these are used to select the pod to create replicas
+      app: api
+      tier: backend
       project: expense
+    # this is pod defination
   template:
     metadata:
+      namespace: expense
+    # these labels belong to pod
       labels:
-        app: backend
-        tier: api
+        app: api
+        tier: backend
         project: expense
     spec:
       containers:
       - name: backend
-        image: joindevops/backend:v1
-        resources:
-          requests:
-            cpu: 100m
-            memory: 128Mi
-          # limits is greater than or equal to requests
-          limits:
-            cpu: 100m
-            memory: 128Mi
-        envFrom:
-        - configMapRef:
-            name: backend
+        image: ashwani525/backend:v1
 ---
-kind: Service
 apiVersion: v1
+kind: Service
 metadata:
-  name: backend
+  name: backend-service
   namespace: expense
 spec:
   selector:
-    app: backend
-    tier: api
+    app: api
+    tier: backend
     project: expense
   ports:
-  - name: backend-port
+  - name: nginx-svc-port
     protocol: TCP
-    port: 8080 # service port
-    targetPort: 8080 # container port
+    port: 8080
+    targetPort: 8080
