@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: ashwani525/frontend:v1
+          image: elektra/web:latest
 ---
 apiVersion: v1
 kind: Service
