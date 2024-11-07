@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: elektra/web:latest
+          image: nginx:stable-perl
 ---
 apiVersion: v1
 kind: Service
