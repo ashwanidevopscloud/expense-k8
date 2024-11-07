@@ -9,7 +9,7 @@ spec:
     tier: api
     project: expense
     module: backened
-  port:
+  ports:
     - name: nginx-svc-port
       protocol: TCP
       port: 8080
