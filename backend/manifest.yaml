@@ -35,11 +35,11 @@ spec:
         project: expense
     spec:
       containers:
-      - name: backend
-        image: ashwani525/backend:v1
-        envFrom:
-          - configMapRef:
-              name: backend
+        - name: backend
+          image: ashwani525/backend:v1
+          envFrom:
+            - configMapRef:
+                name: backend
 ---
 apiVersion: v1
 kind: Service
