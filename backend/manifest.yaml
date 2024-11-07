@@ -16,6 +16,7 @@ spec:
       module: backend
   template:
     metadata:
+      namespace: expense
       labels:
         project: expense
         tier: api
@@ -24,6 +25,8 @@ spec:
       containers:
         - name: backend
           image: ashwani525/backend:v1
+      ports:
+       - containerPort: 8080
 ---
 apiVersion: v1
 kind: Service
