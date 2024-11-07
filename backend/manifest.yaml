@@ -6,6 +6,8 @@ metadata:
    labels:
      project: expense
      created: ashwani525
+     module: backend
+     tier: api
 data:
   DB_HOST: mysql
 ---
