@@ -9,7 +9,7 @@ data:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend-d
+  name: backend
   namespace: expense
   labels:
     app: backend
@@ -31,7 +31,15 @@ spec:
     spec:
       containers:
       - name: backend
-        image: ashwani525/backend:v1
+        image: joindevops/backend:v1
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          # limits is greater than or equal to requests
+          limits:
+            cpu: 100m
+            memory: 128Mi
         envFrom:
         - configMapRef:
             name: backend
@@ -39,7 +47,7 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: backend-service
+  name: backend
   namespace: expense
 spec:
   selector:
