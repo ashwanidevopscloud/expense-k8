@@ -4,27 +4,31 @@ metadata:
   name: backend-d
   namespace: expense
   labels: # these labels are replicaset labels
-    project: backend
+    project: expense
+    module: backend
     tier: api
 spec:
   # modify replicas according to your case
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
     # these are used to select the pod to create replicas
       tier: api
-      project: backend
+      project: expense
+      module: backend
     # this is pod defination
   template:
     metadata:
+      namespace: expense
     # these labels belong to pod
       labels:
         tier: api
-        project: backend
+        project: expense
+        module: backend
     spec:
       containers:
-      - name: backend
-        image: nginx:stable-perl
+        - name: backend
+          image: nginx:stable-perl
 ---
 apiVersion: v1
 kind: Service
@@ -35,7 +39,7 @@ spec:
   type: ClusterIP
   selector:
     tier: api
-    # project: expense
+    project: expense
     module: backened
   ports:
     - name: nginx-svc-port
