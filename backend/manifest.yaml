@@ -3,61 +3,52 @@ kind: ConfigMap
 metadata:
   name: backend
   namespace: expense
-  labels:
-    app: backend-mysql
 data:
   DB_HOST: mysql
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend
+  name: backend-d
   namespace: expense
-  labels:
+  labels: # these labels are replicaset labels
+    app: api
+    tier: backend
     project: expense
-    environment: dev
-    created_by: HemanthKumar
-    module: backend
 spec:
-  replicas: 2
+  # modify replicas according to your case
+  replicas: 3
   selector:
     matchLabels:
+    # these are used to select the pod to create replicas
+      app: api
+      tier: backend
       project: expense
-      environment: dev
-      created_by: HemanthKumar
-      module: backend
+    # this is pod defination
   template:
     metadata:
+    # these labels belong to pod
       labels:
+        app: api
+        tier: backend
         project: expense
-        environment: dev
-        created_by: HemanthKumar
-        module: backend
     spec:
       containers:
-        - name: backend
-          image: hemanthkumar75/backend:v1
-          imagePullPolicy: Always
-          envFrom:
-            - configMapRef:
-                name: backend
-          ports:
-            - containerPort: 8080
+      - name: backend
+        image: ashwani525/backend:v1
 ---
-kind: Service
 apiVersion: v1
+kind: Service
 metadata:
-  name: backend
+  name: backend-service
   namespace: expense
 spec:
   selector:
+    app: api
+    tier: backend
     project: expense
-    environment: dev
-    created_by: HemanthKumar
-    module: backend
-  type: ClusterIP
   ports:
-    - name: backend
-      protocol: TCP
-      port: 8080
-      targetPort: 8080
+  - name: nginx-svc-port
+    protocol: TCP
+    port: 8080
+    targetPort: 8080
