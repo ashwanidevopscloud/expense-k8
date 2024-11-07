@@ -26,11 +26,11 @@ spec:
         tier: frontend
         project: expense
     spec:
+      type: LoadBalancer
       containers:
       - name: nginx
         image: nginx:stable-perl
-      type: LoadBalancer
----
+      
 apiVersion: v1
 kind: Service
 metadata:
