@@ -9,50 +9,67 @@ data:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend-d
+  name: backend
   namespace: expense
-  labels: # these labels are replicaset labels
-    app: api
-    tier: backend
+  labels:
+    app: backend
+    tier: api
     project: expense
 spec:
-  # modify replicas according to your case
   replicas: 2
   selector:
     matchLabels:
-    # these are used to select the pod to create replicas
-      app: api
-      tier: backend
+      app: backend
+      tier: api
       project: expense
-    # this is pod defination
   template:
     metadata:
-      namespace: expense
-    # these labels belong to pod
       labels:
-        app: api
-        tier: backend
+        app: backend
+        tier: api
         project: expense
     spec:
       containers:
-        - name: backend
-          image: ashwani525/backend:v1
-          envFrom:
-            - configMapRef:
-                name: backend
+      - name: backend
+        image: joindevops/backend:v1
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          # limits is greater than or equal to requests
+          limits:
+            cpu: 100m
+            memory: 128Mi
+        envFrom:
+        - configMapRef:
+            name: backend
 ---
-apiVersion: v1
 kind: Service
+apiVersion: v1
 metadata:
-  name: backend-service
+  name: backend
   namespace: expense
 spec:
   selector:
-    app: api
-    tier: backend
+    app: backend
+    tier: api
     project: expense
   ports:
-  - name: nginx-svc-port
+  - name: backend-port
     protocol: TCP
-    port: 8080
-    targetPort: 8080
+    port: 8080 # service port
+    targetPort: 8080 # container port
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+ name: backend
+ namespace: expense
+spec:
+ scaleTargetRef:
+   apiVersion: apps/v1
+   kind: Deployment
+   name: backend
+ minReplicas: 1
+ maxReplicas: 10
+ targetCPUUtilizationPercentage: 15 # usually 75 in real environment
