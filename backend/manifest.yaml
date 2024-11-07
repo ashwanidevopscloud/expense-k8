@@ -4,6 +4,7 @@ metadata:
   name: backend-service
   namespace: expense
 spec:
+  type: clusterIP
   selector:
     tier: api
     project: expense
