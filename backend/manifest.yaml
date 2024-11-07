@@ -21,8 +21,8 @@ spec:
         module: backend
     spec:
       containers:
-      - name: backend
-        image: ashwani525/backend:v1
+        - name: backend
+          image: ashwani525/backend:v1
 ---
 apiVersion: v1
 kind: Service
