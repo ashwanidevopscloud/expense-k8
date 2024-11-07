@@ -26,8 +26,8 @@ spec:
         tier: frontend
         project: expense
       containers:
-      - name: frontend
-        image: ashwani525/frontend:v1
+        - name: frontend
+          image: ashwani525/frontend:v1
 ---
 apiVersion: v1
 kind: Service
