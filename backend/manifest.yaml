@@ -41,7 +41,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: ashwani525/backend:v1
+          image: joindevops/backend:v1
           envFrom:
             - configMapRef:
                 name: backend
