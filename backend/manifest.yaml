@@ -1,3 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+  labels:
+    project: expense
+    tier: api
+    module: backend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      project: expense
+      tier: api
+      module: backend
+  template:
+    metadata:
+      labels:
+        project: expense
+        tier: api
+        module: backend
+    spec:
+      containers:
+      - name: backend
+        image: ashwani525/backend:v1
+---
 apiVersion: v1
 kind: Service
 metadata:
