@@ -14,7 +14,7 @@ data:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend-d
+  name: backend
   namespace: expense
   labels: # these labels are replicaset labels
     project: expense
@@ -41,7 +41,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: joindevops/backend:v1
+          image: ashwani525/backend:v1
           envFrom:
             - configMapRef:
                 name: backend
@@ -49,7 +49,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: backend-service
+  name: backend
   namespace: expense
 spec:
   type: ClusterIP
